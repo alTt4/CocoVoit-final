@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <h1>Suppression de compte</h1>
+    <form>
+        <div class="row justify-content-around connecterform">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="psupprimer">
+                    <b>Êtes vous <span class="spansupprimer">vraiment sur</span> de vouloir <span class="spansupprimer">supprimer</span> votre compte ?
+                    <br><br>
+                    Une fois <span class="spansupprimer">supprimé</span>, vous ne pourrez plus le <span class="spansupprimer">récupérer</span>.</b>
+                    <br><br>
+                    <button class="submitbuttonpublier">Supprimer le compte</button>
+                </p>
+            </div><br><br><br>
+        </div>
+    </form>
+    <br>
+{% endblock %}

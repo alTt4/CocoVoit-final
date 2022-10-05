@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publier un trajet{% endblock %}
+
+{% block body %}
+<h1>Publier un trajet</h1>
+{{ form_start(form) }}
+
+<div class="row justify-content-around connecterform">
+   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(form.departVille)}}
+            </div><br><br><br>
+            {# <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(form.villeDepart)}}
+                <img src="{{ asset('images/flechecourbe.png') }}" style="width:100px; position:absolute">
+            </div><br><br><br>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(form.villeArrive)}}
+            </div><br><br><br> #}
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(form.ecole)}}
+            </div><br><br><br>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				{{ form_row(form.date)}}
+            </div><br><br><br>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(form.nbPlace)}}
+            </div><br><br><br>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(form.commentaire)}}<br><br>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <button onClick="myFunction()" type="submit" class="submitbuttonpublier">Etape suivante </button>
+            </div>
+        </div>
+{{ form_row(form.departLng)}}
+{{ form_row(form.departLat)}}
+{{ form_end(form)}}
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVPrRWYvxPb2L3US6Srdw0iPVG2WtBL9s&libraries=places"></script>
+<script>
+var gpaInput = document.getElementById("form_departVille");
+var autocomplete = new google.maps.places.Autocomplete(gpaInput);
+
+function myFunction(){
+    
+var place = autocomplete.getPlace();
+var latitude = place.geometry.location.lat();
+var longitude = place.geometry.location.lng();
+console.log(latitude);
+document.getElementById("form_departLat").value = latitude;
+document.getElementById("form_departLng").value = longitude;
+}
+</script>
+
+{% endblock %}

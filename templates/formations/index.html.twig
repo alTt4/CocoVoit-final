@@ -1,0 +1,246 @@
+
+
+
+
+{% block body %}
+
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <title>Back Office</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="image/fav2.png">
+
+        <!-- App css -->
+        <link href="{{asset('Bo/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
+        <link href="{{asset('Bo/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('Bo/app.min.css')}}" rel="stylesheet" type="text/css"  id="app-stylesheet" />
+
+
+     
+
+    </head>
+
+    <body>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            
+            <!-- Topbar Start -->
+               <div class="navbar-custom">
+               
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="" class="logo text-center">
+                        <span class="logo-lg">
+                          
+                            <!-- <span class="logo-lg-text-light">Flacto</span> -->
+                        </span>
+                     
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                      
+                    </li>
+                    <li style="float:right" >
+                     
+                    </li>
+        
+                   
+
+                </ul>
+            </div>
+            <!-- end Topbar -->
+
+            
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                      <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+                    
+                            <li>
+                                <a href="{{path('admin')}}" class="waves-effect">
+                                    <img src=""  alt="image"style="width:20px; margin-right:15px">
+                                    <span> Jetons de connexion  </span>
+                                    
+                                </a>
+                               
+                            </li>
+
+                            <li>
+                                <a href="{{path('adminUser')}}" class="waves-effect">
+                                    <img src=""  alt="image"style="width:20px; margin-right:15px">
+                                    <span> Utilisateurs</span>
+                                    
+                                </a>
+                             
+                            </li>
+
+                             <li>
+                                <a href="{{path('app_formations_index')}}" class="waves-effect">
+                                    <img src=""  alt="image"style="width:20px; margin-right:15px">
+                                    <span> Formations</span>
+                                    
+                                </a>
+                             
+                            </li>
+                        
+                           
+                          
+                        </ul>
+
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+
+     
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+             <div class="content-page">
+                <div class="content">
+                    
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                     <br><br>   
+                        <!-- end page title --> 
+
+                        <div class="row">
+                            <div class=" col-sm-12 col-md-12 col-lg-12 colxl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <span>
+                                        <h4 class="header-title">Liste des Jetons de connexion </h4>
+  
+                                      <div style="width:450px; display:block; margin-left:auto; margin-right:auto;">
+                                    
+                                       </div>
+                                
+                  </span>
+                                 <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>DateDebut</th>
+                <th>DateFin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td>{{ formation.id }}</td>
+                <td>{{ formation.libelle }}</td>
+                <td>{{ formation.dateDebut ? formation.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ formation.dateFin ? formation.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_formations_show', {'id': formation.id}) }}">Voir</a>
+                    <a href="{{ path('app_formations_edit', {'id': formation.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_formations_new') }}">Create new</a>
+
+
+
+                                    </div> <!-- end card-body -->
+                                </div> <!-- end card-->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- end container-fluid -->
+
+                </div> <!-- end content -->
+
+                
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+            
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+        
+        <!-- END wrapper -->
+   <link rel='stylesheet' id='wp-block-library-css'
+		href="{{asset('Bo/datatables/jquery.dataTables.min.js')}}" type='text/css' media='all' />
+        <!-- Vendor js -->
+        <script src= "{{asset('Bo/js/vendor.min.js')}}"></script>
+
+        <!-- third party js -->
+        <script src="{{asset('Bo/datatables/jquery.dataTables.min.js')}}"></script>
+        <script src="{{asset('Bo/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+        <script src="{{asset('Bo/datatables/dataTables.responsive.min.js')}}"></script>
+        <script src="{{asset('Bo/datatables/responsive.bootstrap4.min.js')}}"></script>
+
+        <script src="{{asset('Bo/datatables/dataTables.buttons.min.js')}}"></script>
+        <script src="{{asset('Bo/datatables/buttons.bootstrap4.min.js')}}"></script>
+
+        <script src="{{asset('Bo/datatables/jszip/jszip.min.js')}}"></script>
+        <script src="{{asset('Bo/datatables/pdfmake/pdfmake.min.js')}}"></script>
+        <script src="{{asset('Bo/datatables/pdfmake/vfs_fonts.js')}}"></script>
+
+
+        <script src="{{asset('Bo/datatables/buttons.html5.min.js')}}"></script>
+        <script src="{{asset('Bo/datatables/buttons.print.min.js')}}"></script>
+
+        <script src="https://coderthemes.com/flacto/layouts/red-vertical/assets/libs/datatables/dataTables.fixedHeader.min.js"></script>
+        <script src="{{asset('Bo/datatables/dataTables.keyTable.min.js')}}"></script>
+        <script src="{{asset('Bo/datatables/dataTables.scroller.min.js')}}"></script>
+
+
+        <!-- Datatables init -->
+        <script src="{{asset('Bo/js/pages/datatables.init.js')}}"></script>
+        
+         <!-- Vendor js -->
+         <script src="{{asset('Bo/js/vendor.min.js')}}"></script>
+
+<!-- App js -->
+<script src="{{asset('Bo/js/app.min.js')}}"></script>
+       
+    </body>
+</html>
+
+{% endblock %}

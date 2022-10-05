@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des trajets {% endblock %}
+
+{% block body %}
+<br><h1>Liste des trajets</h1><br>
+{% if app.user %}
+{% else %}
+<div style="text-align:center; color:red">
+    <b>Vous devez vous connecter afin de contacter un utilisateur ou réserver un trajet.</b><br><br>
+    <a href="{{path('app_login')}}">
+        <button class="boutonenvoyer">Se connecter</button>
+    </a>
+    <br><br>
+</div>
+{% endif %}
+{% for trajet in trajet %}
+    {% if trajet.user != app.user %}
+        <section>
+        <div class="row justify-content-around" style="text-align: center; margin:10px auto !important; padding:40px 0px; max-width:1200px; border: 2px solid #FF5E28; border-radius:10px;">
+            <div style="max-width: 270px;">
+                {% if trajet.user.image %}
+                    <img src="{{ asset('uploads/'~trajet.user.image) }}" style="width:50px; border-radius:100%; border: 1px solid #FF5E28">
+                <br><br>
+                {% endif %}
+                <b>Publié par : </b>{{ trajet.user.prenom }}<br><br>
+                <b>Commentaire : </b>{{ trajet.commentaire }}
+            </div>
+            <div>
+                <b>Ville de départ : </b> {{ trajet.departVille }}<br>
+                <img style="width: 50px;" src="{{asset('images/arrow-down-blue.png')}}"><br>
+                <b>École : </b>{{ trajet.ecole.libelle }}<br><br>
+                {% if app.user %}
+                <a href={{ path('app_messagerie', {'id':trajet.user.id}) }}>
+                    <button class="boutonenvoyer">Contacter</button>
+                </a>
+                {% endif %}
+                <br><br>
+                {% if trajet.nbPlace <= 0 %}
+                <div style="color:red">
+                    <b>Trajet complet</b><br>
+                </div>
+                
+                {% else %}
+                    {% if app.user %}
+                    <a href={{ path('reservation', {'id':trajet.id}) }}>
+                        <button class="boutonenvoyer">Demande de reservation</button>
+                    </a>
+                    {% endif %}
+                {% endif %}
+               
+            </div>
+            <div>
+                <b>Place(s) restante(s) : </b>{% if trajet.nbPlace > 0 %}{{ trajet.nbPlace }}{% else %} <span style="color:red">Aucune</span> {% endif %}
+                <br><br>
+                <b>Conditions : </b><br>
+              {% if trajet.conditions|length > 0 %}
+                    {% for condition in trajet.conditions %}
+                          
+                            - {{ condition.libelle }}: 
+                            {% if condition.content == 1 %}<span style="color:green">oui</span>
+                            {% endif %}
+                            {% if condition.content == 0 %}<span style="color:red">non</span>
+                            {% endif %}<br>
+                        
+                        
+                    {% endfor %}
+                    {% else %}
+                     Aucune condition
+                    {% endif %}
+            </div>
+        </div>
+    </section>
+    <br>
+    {% endif %}
+{% endfor %}
+
+{% endblock %}

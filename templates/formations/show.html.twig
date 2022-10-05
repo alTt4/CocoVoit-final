@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formations{% endblock %}
+
+{% block body %}
+    <h1>Formations</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ formation.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ formation.libelle }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ formation.dateDebut ? formation.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ formation.dateFin ? formation.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_formations_index') }}">back to list</a>
+
+    <a href="{{ path('app_formations_edit', {'id': formation.id}) }}">edit</a>
+
+    {{ include('formations/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <div class="messageriebloc">
+        <h1 class="nomconversation">Conversation avec {{ desti.prenom }}</h1>
+        <hr style="width:80%; height:2px;border:none;color:#FF5E28;background-color:#FF5E28;">
+        
+        <div id="divscroll">
+        {% for res in messages %}
+            {% if res.user == desti %}
+            <div class="divdestinataire">
+                {% if res.user.image %}
+                    <img src="{{ asset('uploads/'~res.user.image) }}" class="rounded-circle" style="width:50px; height:50px; align-self:end">
+                {% else %}   
+                    <img src="{{asset('images/iconeprofil.png')}}" class="rounded-circle" style="width:50px; height:50px; align-self:end">
+                {% endif %}
+                <img src="{{asset('images/trianglebleu.png')}}" style="width:50px; align-self:end; position:relative; left:8px; z-index:-1">
+                <div style="text-align:left; padding:10px; background-color:#2F3C70; color:white; border-radius:10px">
+                    {{ res.message }}
+                </div>             
+            </div>
+            
+            <div style="padding:0px 60px;text-align:left; color:#FF5E28">
+                Le {{ res.date|date("m/d/Y") }} à {{ res.date|date("H:i") }}
+            </div>
+            {% else %}
+            <div class="divexpediteur" >
+                {% if app.user.image %}
+                    <img src="{{ asset('uploads/'~app.user.image) }}" class="rounded-circle" style="width:50px; height:50px; align-self:end">
+                {% else %}
+                    <img src="{{asset('images/iconeprofil.png')}}" class="rounded-circle" style="width:50px; height:50px; align-self:end">
+                {% endif %}
+                <img src="{{asset('images/trianglebleu2.png')}}" style="width:50px; align-self:end; position:relative; right:8px; z-index:-1">
+                <div id="content"style="text-align:left; padding:10px; background-color:#FF5E28; color:white; border-radius:10px">
+                    {{ res.message }} 
+                </div>
+                <br>               
+            </div>
+            <div style="padding:0px 60px;text-align:right; color:#FF5E28">
+                {{ res.date|date("m/d/Y") }} à {{ res.date|date("H:i") }}
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+       <form method="POST" action="{{ path('sendMessage', {'id':id, "idMessagerie":idMessagerie}) }}" >
+		    <textarea name="message" id="message" style="width:100%; height:200px; border: 2px solid #ff5e28;"></textarea>
+            <input type="hidden" name="validate" value="valide">
+            <button type="submit" class="boutonenvoyermessage" onclick="envoyer()">Envoyer</button>
+        </form>
+        <a class="boutonenvoyerreservation"></a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+    var objDiv = document.getElementById("divscroll");
+    objDiv.scrollTop = objDiv.scrollHeight;
+
+
+
+
+
+      function envoyer()
+ {
+    let message = $('#message').val();
+    let content = $('#content').html(message);
+ 
+   
+
+   
+
+ }
+    </script>
+
+
+
+    
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <div id="banniere"> 
+        <div style="display: flex; justify-content: center; align-items: center; height:100%">
+            <div class="row rowtrajet" >
+         
+            <form method="POST" action="{{path('listTrajets')}}" onsubmit="return checkRegex();">
+            <input type="hidden" name="validate" value="valide">
+            <span id="lieuInvalide" style="color:red"></span>
+            <input name="depart" class="inputaccueil" placeholder="Lieu de départ" type="text" id="depart"required>
+            
+            <input type="hidden" name="longitudeDepart" id="longitudeDepart">
+            <input type="hidden" name="latitudeDepart" id="latitudeDepart">
+
+            <input type="number" class="inputaccueil" placeholder="Détour (km)" name="km"required min="1">
+            <br>
+            <br>
+            <select class="form-control basicSelect2" name="ecoles" data-toggle="select2" required>
+                <option value="">Sélectionner une école</option>
+                    {% for res in ecoles %}
+                        <option value="{{res.id}}">{{res.libelle}}</option>
+                     {% endfor %}    
+            </select>
+            <br>
+            <div style="text-align:center">
+              <button onClick="myFunction()" type="submit" class="boutonenvoyer">Rechercher </button>
+            </div>
+              </form>
+          
+           
+            
+            </div>
+        </div>
+       
+    </div>
+        <div class="row">
+            <div class="col-sm blocicones"> 
+                <img src="{{asset('images/icone1.png')}}" class="troisicones"><br><br>
+                Vous êtes étudiant ou alternant et avez besoin d’un moyen plus économique et plus conviviale pour vous rendre à l’école ou au travail ?
+                <br><br>
+                Optez pour le covoiturage !
+            </div>
+            <div class="col-sm blocicones">
+                <img src="{{asset('images/icone2.png')}}" class="troisicones"><br><br>
+                Un petit pas pour vous, un grand pas pour la planète ! Le covoiturage permet de réduire la diffusion d’effet de serre. Cette application s’engage dans le manifeste Planet Tech’Care pour réduire l’empreinte environnementale 
+            </div>
+            <div class="col-sm blocicones">
+            <img src="{{asset('images/icone3.png')}}" class="troisicones"><br><br>
+                Réserver un trajet devient encore plus simple !
+                <br><br>
+                Facile d'utilisation et dotée de technologies avancées, notre appli vous permet de réserver un trajet à proximité en un rien de temps.
+            </div>
+        </div>
+        <!-- Load Google Places API -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVPrRWYvxPb2L3US6Srdw0iPVG2WtBL9s&libraries=places"></script>
+
+
+<script>
+/* Set autocomplete input */
+var gpaInput = document.getElementById("depart");
+var autocomplete = new google.maps.places.Autocomplete(gpaInput);
+function myFunction(){
+var place = autocomplete.getPlace();
+var latitude = place.geometry.location.lat();
+var longitude = place.geometry.location.lng();
+document.getElementById("latitudeDepart").value = latitude;
+document.getElementById("longitudeDepart").value = longitude;
+}
+
+/* REGEX */
+function checkRegex() {
+    var depart = document.getElementById('depart').value;
+    var regex = /(\w+),\s*(\w+)/;
+    var lieuInvalide = document.getElementById('lieuInvalide');
+    if ((!regex.test(depart))) {
+        lieuInvalide.innerHTML = "Veuillez selectionner une ville dans la liste. <br>";
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}

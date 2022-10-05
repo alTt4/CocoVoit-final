@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# CSP #}
+    {# <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://*; child-src 'none';" /> #}
+    <title>Bienvenue sur Cocovoit !</title>
+    <meta name="description" content="Notre application de covoiturage réalisée pour Metz Numeric School">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{asset("images/mns16x16.jpg")}}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            {#{{ encore_entry_link_tags('app') }}#}
+        {% endblock %}
+
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+        {% endblock %}
+    </head>
+    <body>
+            <!-- Début header -->
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="header">
+                <div class="tete dropdown">
+                    <a href="{{path('app_home')}}"><img class="logo" alt="Logo MNS en orange" src="{{asset('images/logo-mns.png ')}}"></a>
+                    <a class="navbar-brand dropdown-toggle" href="#" role="button" id="profil" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% if app.user %}
+                            {% if app.user.image %}
+                            <img src="{{ asset('uploads/'~app.user.image) }}" alt="icone de profil" class="logoprofil" style="border:1px solid #fe5c2d; border-radius:100%">
+                            {% else %}
+                            <img src="{{asset("images/profil.png")}}" alt="icone de profil" class="logoprofil">
+                            {% endif %}
+                        {% else %}
+                        <img src="{{asset("images/profil.png")}}" alt="icone de profil" class="logoprofil">
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					{% if app.user %}
+                        <a class="dropdown-item" href="{{path('inscription')}}">Paramètres</a>
+                        <a class="dropdown-item" href="{{path('app_login')}}">Mes trajets</a>
+                        <a class="dropdown-item" href="{{path('app_login')}}">Mes Réservations</a>
+                        {% if app.user.roles|length > 1 %}
+                        <a class="dropdown-item" href="{{path('admin')}}">Espace administrateur</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{path('app_logout')}}">Déconnexion</a>
+                    {% else %}
+                        <a class="dropdown-item" href="{{path('inscription')}}">Inscription</a>
+                        <a class="dropdown-item" href="{{path('app_login')}}">Connexion</a>
+                    {% endif %}
+                    </div>
+					{% if app.user %}
+						<span style="float: right; padding-top: 26px; margin-right: 20px; color:#fe5c2d; font-weight:bold">Bienvenue {{ app.user.prenom }}</span>
+						<a data-toggle="collapse" href="#collapseExample1" id="collapseButton1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            {{ render(controller('App\\Controller\\HomeController::countNotif')) }}
+                            <img src="{{asset("images/cloche.png")}}"  alt="icone de cloche orange" class="cloche">
+                        </a>
+                        <a data-toggle="collapse" href="#collapseExample2" id="collapseButton2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                            {{ render(controller('App\\Controller\\HomeController::countMessage')) }}
+                            <img src="{{asset("images/message.png")}}"  alt="icone de messagerie orange" class="cloche">
+                        </a>
+
+                        <a class="btnpublier" href="{{path('nvx_trajet')}}"><img src="{{asset("images/plus.png")}}" alt="icone bouton plus blanc" class="iconePlus">Publier un trajet</a>
+					{% else %}
+						<span style="float: right; padding-top: 26px; margin-right: 20px; color:#fe5c2d; font-weight:bold">Vous n'êtes pas connecté</span>
+					{% endif %}
+                </div>
+            </nav>	
+        </header>
+        {% if app.user %}
+        <div class="collapse" id="collapseExample1">
+            <div class="card card-body">
+            {{ render(controller('App\\Controller\\HomeController::notif')) }}
+            </div>
+        </div>
+        <div class="collapse" id="collapseExample2">
+            <div class="card card-body">
+            {{ render(controller('App\\Controller\\HomeController::message')) }}
+            </div>
+        </div>
+        {% endif %}
+	<!-- Fin header -->
+        {% block body %}{% endblock %}
+            <!-- Début footer 
+    <footer>
+        <div class="row">
+            <div class="col-sm">
+                <img class="logofooter" src="{{asset('images/logo-mns.png ')}}">
+            </div>
+            <div class="col-sm">
+                <h3>Navigation 1</h3>
+                <ul>
+                    <li>Lien 1</li>
+                    <li>Lien 2</li>
+                    <li>Lien 3</li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <h3>Navigation 2</h3>
+                <ul>
+                    <li>Lien 1</li>
+                    <li>Lien 2</li>
+                    <li>Lien 3</li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <h3>Navigation 3</h3>
+                <ul>
+                    <li>Lien 1</li>
+                    <li>Lien 2</li>
+                    <li>Lien 3</li>
+                </ul>
+            </div>
+        </div>
+    </footer>-->
+    <!-- Fin footer -->
+    <script>
+    let collapseButton1 = document.getElementById("collapseButton1");
+    let collapseButton2 = document.getElementById("collapseButton2");
+    let collapseExample1 = document.getElementById("collapseExample1");
+    let collapseExample2 = document.getElementById("collapseExample2");
+
+    var x = collapseExample1.getAttribute("aria-expanded"); 
+    var y = collapseExample2.getAttribute("aria-expanded"); 
+
+    collapseButton1.onclick = function(){
+        collapseExample2.classList.remove("show");
+        collapseButton2.setAttribute("aria-expanded", false);
+        collapseButton2.classList.add("collapsed");
+    };
+
+    collapseButton2.onclick = function(){
+        collapseExample1.classList.remove("show");
+        collapseButton1.setAttribute("aria-expanded", false);
+        collapseButton1.classList.add("collapsed");
+    };
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+        <script src="//code.jquery.com/jquery.js"></script>
+        {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+        
+
+    </body>
+</html>

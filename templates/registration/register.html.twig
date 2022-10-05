@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Inscription</h1>
+      {{ form_start(registrationForm, {'attr': {'id': 'formRegister'}}) }}
+        <div class="row justify-content-around formReg" style="text-align:center">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.nom) }}
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.prenom) }}
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.email) }}
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.telephone) }}
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <span style="color:red" id="passInvalide"></span>
+                {{ form_row(registrationForm.plainPassword) }}
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <label for="code"> Identifiant MNS : </label><br>
+                <input type="number" style="width:100%; padding: 0.375rem 0.75rem; border: 2px solid #FF5E28; border-radius: 10px;" name="code">
+            </div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.dateNaissance) }}
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.permis) }}
+            </div>
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(registrationForm.image) }}
+            </div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"></div>
+		</div>
+			<hr style="border: 1px solid #FF5E28; width:80%">
+		<div class="row justify-content-around formReg" style="text-align:center">
+            
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.status) }}
+            </div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                {{ form_row(registrationForm.formation) }}
+            </div>
+          
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                {{ form_row(registrationForm.agreeTerms) }}
+            </div>
+
+      <div class="g-recaptcha" data-sitekey="6Ldgv0IiAAAAALI7soJ-MivQfC02Xkx2lZbDffY0"></div>
+            
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<button type="submit" class="btn">S'inscrire</button> 
+			</div>
+        </div>    
+
+{{ form_end(registrationForm) }}
+
+<script>
+/* REGEX */
+var formRegister = document.getElementById("formRegister");
+formRegister.onsubmit = return function test(){
+    var password = document.getElementById('registration_form_plainPassword').value;
+    var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    var passInvalide = document.getElementById('passwordInvalide');
+
+    if ((!regex.test(password))) {
+        passInvalide.innerHTML = "Le mot de passe doit comporter 8 caractères minimum dont un chiffre. <br>";
+        return false;
+    }
+    return true;
+}
+</script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
+
